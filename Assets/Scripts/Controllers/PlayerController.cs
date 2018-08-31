@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour {
 
-    public float speed;
+    public float walkSpeed;
+    public float turnSpeed;
 
     private Animator animator;
 
@@ -16,8 +17,8 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        var x = Input.GetAxis("Horizontal") * Time.deltaTime * 150.0f;
-        var z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
+        var x = Input.GetAxis("Horizontal") * Time.deltaTime * turnSpeed;
+        var z = Input.GetAxis("Vertical") * Time.deltaTime * walkSpeed;
         bool isWalking = z > 0.0f;
         bool isWalkingBackwards = z < 0.0f;
 
