@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ea065e0aa53ffbd4cb74c086cc7a784a
+guid: 04fc60705bdf80047ae1541d7d807995
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -107,7 +107,7 @@ ModelImporter:
     400100: Root
     2100000: Robot
     4300000: Robot2
-    7400000: Walking
+    7400000: Walking Backwards
     9500000: //RootNode
     13700000: Robot2
   externalObjects: {}
@@ -139,10 +139,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Walking
+      name: Walking Backwards
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 37
+      lastFrame: 36
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
