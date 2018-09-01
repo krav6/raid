@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8766a92d5d25ef44f8b86ad6a5ac65bc
+guid: dd3dd2820f375984d878540b5f3a4e60
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -107,7 +107,7 @@ ModelImporter:
     400100: Root
     2100000: Robot
     4300000: Robot2
-    7400000: Crouching Idle
+    7400000: Crawl Backwards
     9500000: //RootNode
     13700000: Robot2
   externalObjects: {}
@@ -139,10 +139,10 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Crouching Idle
+      name: Crawl Backwards
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 75
+      lastFrame: 119
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

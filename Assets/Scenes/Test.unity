@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 3
   turnSpeed: 300
+  crawlSpeed: 1
 --- !u!1 &115382067
 GameObject:
   m_ObjectHideFlags: 0
