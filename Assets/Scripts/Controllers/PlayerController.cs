@@ -21,8 +21,8 @@ public class PlayerController : MonoBehaviour {
         var z = Input.GetAxis("Vertical") * Time.deltaTime * walkSpeed;
         bool isWalking = z > 0.0f;
         bool isWalkingBackwards = z < 0.0f;
-        bool isTurningLeft = x > 0.0f;
-        bool isTurningRight = x < 0.0f;
+        bool isTurningLeft = x < 0.0f;
+        bool isTurningRight = x > 0.0f;
 
         animator.SetBool("isWalking", isWalking);
         animator.SetBool("isWalkingBackwards", isWalkingBackwards);
