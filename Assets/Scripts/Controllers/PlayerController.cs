@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,8 +9,46 @@ public class PlayerController : MonoBehaviour {
     public float walkSpeed;
     public float turnSpeed;
     public float crawlSpeed;
+    public float runSpeed;
 
     private Animator animator;
+
+    private class StateManager
+    {
+        public Dictionary<string, bool> states;
+
+        public StateManager(Animator animator)
+        {
+            states = new Dictionary<string, bool>();
+            initializeAndSetAnimatorStates(animator);
+        }
+
+        private void initializeAndSetAnimatorStates(Animator animator)
+        {
+            initializeStates();
+            setAnimatorStates(animator);
+        }
+
+        private void initializeStates()
+        {
+            states.Add("isCrouching", Input.GetKey(KeyCode.Q));
+            states.Add("isMovingForward", Input.GetAxis("Vertical") > 0.0f);
+            states.Add("isMovingBackward", Input.GetAxis("Vertical") < 0.0f);
+            states.Add("isTurningRight", Input.GetAxis("Horizontal") > 0.0f);
+            states.Add("isTurningLeft", Input.GetAxis("Horizontal") < 0.0f);
+            states.Add("isRunning", !states["isCrouching"] && states["isMovingForward"] && Input.GetKey(KeyCode.LeftShift));
+        }
+
+        private void setAnimatorStates(Animator animator)
+        {
+            foreach (KeyValuePair<string, bool> state in states)
+            {
+                animator.SetBool(state.Key, state.Value);
+            }
+        }
+    }
+
+    private StateManager stateManager;
 
     void Start()
     {
@@ -36,7 +75,7 @@ public class PlayerController : MonoBehaviour {
         return isJumpingInPlace(animatorInfo) || isJumpingForward(animatorInfo) || isJumpingBackward(animatorInfo);
     }
 
-    void handleJumping(bool isCrouching, AnimatorStateInfo animatorInfo)
+    void handleJumping(AnimatorStateInfo animatorInfo)
     {
         bool isJumping = this.isJumping(animatorInfo);
         if(isJumping)
@@ -45,24 +84,30 @@ public class PlayerController : MonoBehaviour {
             return;
         }
 
-        if (!isJumping && !isCrouching && Input.GetKeyDown(KeyCode.Space))
+        if (!isJumping && !stateManager.states["isCrouching"] && Input.GetKeyDown(KeyCode.Space))
         {
             animator.SetTrigger("Jump");
         }
     }
 
-    void handleVerticalMovement(bool isCrouching, AnimatorStateInfo animatorInfo)
+    void handleVerticalMovement(AnimatorStateInfo animatorInfo)
     {
-        if(isJumpingInPlace(animatorInfo))
+        if (isJumpingInPlace(animatorInfo))
         {
             return;
         }
 
-        float movementSpeed = isCrouching ? crawlSpeed : walkSpeed;
-        var z = Input.GetAxis("Vertical") * Time.deltaTime * movementSpeed;
+        float movementSpeed = walkSpeed;
+        if(stateManager.states["isCrouching"])
+        {
+            movementSpeed = crawlSpeed;
+        }
+        else if(stateManager.states["isRunning"])
+        {
+            movementSpeed = runSpeed;
+        }
 
-        animator.SetBool("isMovingForward", z > 0.0f);
-        animator.SetBool("isMovingBackward", z < 0.0f);
+        var z = Input.GetAxis("Vertical") * Time.deltaTime * movementSpeed;
         transform.Translate(0, 0, z);
     }
 
@@ -70,24 +115,16 @@ public class PlayerController : MonoBehaviour {
     {
         var x = Input.GetAxis("Horizontal") * Time.deltaTime * turnSpeed;
 
-        animator.SetBool("isTurningLeft", x < 0.0f);
-        animator.SetBool("isTurningRight", x > 0.0f);
-
         transform.Rotate(0, x, 0);
     }
 
     void FixedUpdate()
     {
+        stateManager = new StateManager(animator);
         var animatorInfo = animator.GetCurrentAnimatorStateInfo(0);
 
-        bool isCrouching = Input.GetKey(KeyCode.Q);
-        animator.SetBool("isCrouching", isCrouching);
-
-        handleJumping(isCrouching, animatorInfo);
-        handleVerticalMovement(isCrouching, animatorInfo);
+        handleJumping(animatorInfo);
+        handleVerticalMovement(animatorInfo);
         handleHorizontalMovement();
-
-        bool isStanding = !isCrouching && !isJumping(animatorInfo);
-        animator.SetBool("isStanding", isStanding);
     }
 }
