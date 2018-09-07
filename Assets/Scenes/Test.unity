@@ -168,6 +168,7 @@ MonoBehaviour:
   walkSpeed: 3
   turnSpeed: 300
   crawlSpeed: 1
+  runSpeed: 5
 --- !u!1 &115382067
 GameObject:
   m_ObjectHideFlags: 0
