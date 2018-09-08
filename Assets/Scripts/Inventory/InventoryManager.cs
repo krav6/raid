@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour {
+public class InventoryManager : MonoBehaviour {
     public int numberOfSlots;
     private Dictionary<int, Item> inventory = new Dictionary<int, Item>();
 
