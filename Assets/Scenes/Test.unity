@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbbd7dd407df9d42bf7292b18f18d30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfSlots: 0
+  numberOfSlots: 10
 --- !u!114 &86490038
 MonoBehaviour:
   m_ObjectHideFlags: 0
