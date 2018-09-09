@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InventoryManager : MonoBehaviour {
     public int numberOfSlots;
+    public class IntEvent : UnityEvent<int> { }
+    public IntEvent itemAdded = new IntEvent();
     private Dictionary<int, Item> inventory = new Dictionary<int, Item>();
 
     public bool addItem(Item item)
@@ -15,6 +18,7 @@ public class InventoryManager : MonoBehaviour {
         }
 
         inventory.Add(emptySlotIndex, item);
+        itemAdded.Invoke(emptySlotIndex);
 
         return true;
     }
@@ -27,6 +31,7 @@ public class InventoryManager : MonoBehaviour {
         }
 
         inventory.Add(slotIndex, item);
+        itemAdded.Invoke(slotIndex);
 
         return true;
     }
@@ -62,7 +67,7 @@ public class InventoryManager : MonoBehaviour {
         return addItemToSlot(toSlotIndex, fromItem);
     }
 
-    private Item getItemOfSlotIndex(int slotIndex)
+    public Item getItemOfSlotIndex(int slotIndex)
     {
         Item item = null;
         if (inventory.TryGetValue(slotIndex, out item))
