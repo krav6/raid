@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224014667193120444}
   - component: {fileID: 222836646798473778}
   - component: {fileID: 114571273550661308}
+  - component: {fileID: 114427953753513752}
   m_Layer: 5
   m_Name: SlotItem
   m_TagString: Untagged
@@ -28,6 +29,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114427953753513752
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1910963260031174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08bae07b3d5e1b54d90d119333cf275b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114571273550661308
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -47,7 +59,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
