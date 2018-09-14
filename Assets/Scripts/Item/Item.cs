@@ -9,8 +9,16 @@ public class Item : MonoBehaviour {
         set { name = value; }
     }
 
+    public Sprite image;
+    public Sprite Image
+    {
+        get { return image; }
+        set { image = value; }
+    }
     public Item(string name)
     {
         Name = name;
     }
+
+
 }
