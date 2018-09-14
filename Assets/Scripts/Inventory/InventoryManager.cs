@@ -7,6 +7,7 @@ public class InventoryManager : MonoBehaviour {
     public int numberOfSlots;
     public class IntEvent : UnityEvent<int> { }
     public IntEvent itemAdded = new IntEvent();
+    public IntEvent itemRemoved = new IntEvent();
     private Dictionary<int, Item> inventory = new Dictionary<int, Item>();
 
     public bool addItem(Item item)
@@ -39,6 +40,7 @@ public class InventoryManager : MonoBehaviour {
     public void removeItemFromSlot(int slotIndex)
     {
         inventory.Remove(slotIndex);
+        itemRemoved.Invoke(slotIndex);
     }
 
     public bool moveItemFromSlotToSlot(int fromSlotIndex, int toSlotIndex)

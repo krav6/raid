@@ -14,7 +14,7 @@ public class PlayerCollisionManager : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("Pickable"))
         {
-            if(inventory.addItem(other.GetComponent<Item>()))
+            if(inventory.addItem(other.GetComponent<ItemController>().Item))
             {
                 Destroy(other.gameObject);
             }
