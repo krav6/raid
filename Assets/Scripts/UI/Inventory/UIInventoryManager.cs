@@ -5,10 +5,8 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UIInventoryManager : MonoBehaviour {
-    public InventoryManager inventoryReference;
     public GameObject inventorySlotPrefab;
     public GameObject inventorySlotImagePrefab;
-    public GraphicRaycaster graphicsRayCasterReference;
     private Dictionary<int, GameObject> itemSlots;
     private Dictionary<int, GameObject> itemSlotImages;
     private UnityAction<int> itemAddedAction;
@@ -16,16 +14,16 @@ public class UIInventoryManager : MonoBehaviour {
     private UnityAction<int, int> slotImageMovedAction;
 
     void Start () {
-        GetComponent<RectTransform>().sizeDelta = new Vector2(inventoryReference.numberOfSlots * 70, 60);
+        GetComponent<RectTransform>().sizeDelta = new Vector2(SceneManager.InventoryManager.numberOfSlots * 70, 60);
         itemSlots = new Dictionary<int, GameObject>();
         itemSlotImages = new Dictionary<int, GameObject>();
         itemAddedAction += addSlotImage;
         itemRemovedAction += removeSlotImage;
         slotImageMovedAction += moveSlotImage;
-        inventoryReference.itemAdded.AddListener(itemAddedAction);
-        inventoryReference.itemRemoved.AddListener(itemRemovedAction);
+        SceneManager.InventoryManager.itemAdded.AddListener(itemAddedAction);
+        SceneManager.InventoryManager.itemRemoved.AddListener(itemRemovedAction);
 
-        for (int i = 0; i < inventoryReference.numberOfSlots; i++)
+        for (int i = 0; i < SceneManager.InventoryManager.numberOfSlots; i++)
         {
             addSlot(i);
         }
@@ -45,9 +43,8 @@ public class UIInventoryManager : MonoBehaviour {
         slotImageObject.name = "SlotImage-" + slotIndex;
         UISlotImageManager uiSlotImage = slotImageObject.GetComponent<UISlotImageManager>();
         uiSlotImage.Index = slotIndex;
-        uiSlotImage.RayCaster = graphicsRayCasterReference;
         uiSlotImage.movedToSlot.AddListener(slotImageMovedAction);
-        slotImageObject.GetComponent<Image>().sprite = inventoryReference.getItemOfSlotIndex(slotIndex).Image;
+        slotImageObject.GetComponent<Image>().sprite = SceneManager.InventoryManager.getItemOfSlotIndex(slotIndex).Image;
         itemSlotImages.Add(slotIndex, slotImageObject);
     }
 
@@ -66,6 +63,6 @@ public class UIInventoryManager : MonoBehaviour {
 
     void moveSlotImage(int fromIndex, int toIndex)
     {
-        inventoryReference.moveItemFromSlotToSlot(fromIndex, toIndex);
+        SceneManager.InventoryManager.moveItemFromSlotToSlot(fromIndex, toIndex);
     }
 }

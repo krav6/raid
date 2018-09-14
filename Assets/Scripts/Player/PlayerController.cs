@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour {
             states.Add("isMovingBackward", Input.GetAxis("Vertical") < 0.0f);
             states.Add("isTurningRight", Input.GetAxis("Horizontal") > 0.0f);
             states.Add("isTurningLeft", Input.GetAxis("Horizontal") < 0.0f);
-            states.Add("isRunning", !states["isCrouching"] && states["isMovingForward"] && Input.GetKey(KeyCode.LeftShift));
+            states.Add("isRunning", !states["isCrouching"] && states["isMovingForward"] && Input.GetKey(KeyCode.LeftShift) && SceneManager.PlayerAttributeManager.Stamina > 0);
         }
 
         private void setAnimatorStates(Animator animator)
@@ -119,6 +119,11 @@ public class PlayerController : MonoBehaviour {
     {
         stateManager = new StateManager(animator);
         var animatorInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        if(stateManager.states["isRunning"])
+        {
+            SceneManager.PlayerAttributeManager.Stamina -= Time.deltaTime * SceneManager.PlayerAttributeManager.RunStaminaBurnRate;
+        }
 
         handleJumping(animatorInfo);
         handleVerticalMovement(animatorInfo);
