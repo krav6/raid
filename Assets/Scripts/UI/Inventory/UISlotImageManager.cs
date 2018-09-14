@@ -12,7 +12,6 @@ public class UISlotImageManager : MonoBehaviour, IBeginDragHandler, IDragHandler
     private int index;
     public class IntToIntEvent : UnityEvent<int, int> { }
     public IntToIntEvent movedToSlot = new IntToIntEvent();
-    private GraphicRaycaster rayCaster;
 
     public int Index
     {
@@ -24,19 +23,6 @@ public class UISlotImageManager : MonoBehaviour, IBeginDragHandler, IDragHandler
         set
         {
             index = value;
-        }
-    }
-
-    public GraphicRaycaster RayCaster
-    {
-        get
-        {
-            return rayCaster;
-        }
-
-        set
-        {
-            rayCaster = value;
         }
     }
 
@@ -54,7 +40,7 @@ public class UISlotImageManager : MonoBehaviour, IBeginDragHandler, IDragHandler
         isDragging = false;
 
         List<RaycastResult> results = new List<RaycastResult>();
-        RayCaster.Raycast(eventData, results);
+        SceneManager.GraphicRaycaster.Raycast(eventData, results);
 
         foreach (RaycastResult result in results)
         {
